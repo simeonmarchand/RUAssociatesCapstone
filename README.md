@@ -9,7 +9,7 @@ maintenance information of their purchases.
 The application will:
 
 Allow user input of the purchased item, to include data validation;
-• Allow user input of warranty or maintenance data of a purchased item, to include datavalidation;
-• Maintain item, warranty, and maintenance data in a persistent database;
-• Allow users to query the database on select data points;
-• Allow users to delete entries from database.
+- [ ] Allow user input of warranty or maintenance data of a purchased item, to include datavalidation;
+- [ ] Maintain item, warranty, and maintenance data in a persistent database;
+- [ ] Allow users to query the database on select data points;
+- [ ] Allow users to delete entries from database.
