@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,600&display=swap"
+    rel="stylesheet">
+  <script src="saveWarranty.js"></script>
+  <title>Simeon Marchand Capstone Project</title>
+</head>
+
+<body class="background">
+  <div class="nav">
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="search.html">Search</a></li>
+    </ul>
+  </div>
+  <div class="padding">
+    <div class="title">
+      <h1>Warranty/Maintenance Tracker</h1>
+      <form action="add_item.php" method="post" onsubmit="return validateForm()">
+        <label for="itemName">Item Name:</label>
+        <input type="text" id="itemName" name="itemName"><br>
+
+        <label for="itemDescription">Item Description:</label>
+        <input type="text" id="itemDescription" name="itemDescription"><br>
+
+        <label for="itemCategory">Item Category:</label>
+        <input type="text" id="itemCategory" name="itemCategory"><br>
+
+        <label for="itemManufacturer">Item Manufacturer:</label>
+        <input type="text" id="itemManufacturer" name="itemManufacturer"><br>
+
+        <hr>
+
+        <h2>Maintenance Information</h2>
+
+        <label for="maintenanceDate">Maintenance Date:</label>
+        <input type="date" id="maintenanceDate" name="maintenanceDate"><br>
+
+        <label for="maintenanceDescription">Maintenance Description:</label>
+        <input type="text" id="maintenanceDescription" name="maintenanceDescription"><br>
+
+        <label for="maintenanceCost">Maintenance Cost:</label>
+        <input type="number" id="maintenanceCost" name="maintenanceCost"><br>
+
+        <hr>
+
+        <h2>Warranty Information</h2>
+
+        <label for="warrantyStartDate">Warranty Start Date:</label>
+        <input type="date" id="warrantyStartDate" name="warrantyStartDate"><br>
+
+        <label for="warrantyEndDate">Warranty End Date:</label>
+        <input type="date" id="warrantyEndDate" name="warrantyEndDate"><br>
+
+        <label for="warrantyProvider">Warranty Provider:</label>
+        <input type="text" id="warrantyProvider" name="warrantyProvider"><br>
+
+        <label for="warrantyTerms">Warranty Terms:</label>
+        <textarea id="warrantyTerms" name="warrantyTerms"></textarea><br>
+
+        <label for="extendedWarrantyStartDate">Extended Warranty Start Date:</label>
+        <input type="date" id="extendedWarrantyStartDate" name="extendedWarrantyStartDate"><br>
+
+        <label for="extendedWarrantyEndDate">Extended Warranty End Date:</label>
+        <input type="date" id="extendedWarrantyEndDate" name="extendedWarrantyEndDate"><br>
+
+        <label for="warrantyCost">Warranty Cost:</label>
+        <input type="number" id="warrantyCost" name="warrantyCost"><br>
+
+        <input type="submit" value="Add Item">
+      </form>
+
+      <div id="errorMessages" class="error"></div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* ID'S */
+.background {
+  background-color: #dddddd;
+}
+
+.padding {
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+}
+
+.title {
+  margin: 25px 50px 75px;
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.title-list {
+  text-align: left;
+  justify-content: left;
+  font-weight: normal;
+}
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+.nav li {
+  float: left;
+}
+
+.nav a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04aa6d;
+}
+
+/* HTML TAGS */
+p {
+  font-weight: normal;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: 200px;
+  padding: 5px;
+}
+
+input[type="submit"] {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+}
