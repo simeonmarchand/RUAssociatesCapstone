@@ -9,6 +9,9 @@ ini_set("docref_root", "http://www.php.net/");
 ini_set("error_prepend_string", "<div style='color:red; font-family:verdana; border:1px solid red; padding:5px;'>");
 ini_set("error_append_string", "</div>");
 
+// login.php
+require 'login.php';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Retrieve form data
     $itemName = $_POST["itemName"];
@@ -28,9 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // TODO: Perform data validation and sanitation as needed
 
-    // Database connection configuration
-    require "login.php";
-
     // Create a connection
     $connection = new mysqli($hn, $un, $pw, $db);
 
@@ -40,31 +40,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Insert data into the Items table
-    $itemQuery = "INSERT INTO Items (name, description, category, manufacturer)
-                  VALUES ('$itemName', '$itemDescription', '$itemCategory', '$itemManufacturer')";
+    $itemQuery = "INSERT INTO Items (item_id, name, description, category, manufacturer)
+                VALUES (NULL, '$itemName', '$itemDescription', '$itemCategory', '$itemManufacturer')";
 
     if ($connection->query($itemQuery) === TRUE) {
-        echo "Item record inserted successfully";
+        $itemId = $connection->insert_id; // Retrieve the generated item_id
+        echo "Item record inserted successfully. Item ID: $itemId";
     } else {
         echo "Error inserting item record: " . $connection->error;
     }
 
     // Insert data into the Maintenance table
-    $maintenanceQuery = "INSERT INTO Maintenance (date, description, cost)
-                          VALUES ('$maintenanceDate', '$maintenanceDescription', '$maintenanceCost')";
+    $maintenanceQuery = "INSERT INTO Maintenance (maintenance_id, date, description, cost)
+                        VALUES (NULL, '$maintenanceDate', '$maintenanceDescription', '$maintenanceCost')";
 
     if ($connection->query($maintenanceQuery) === TRUE) {
-        echo "Maintenance record inserted successfully";
+        $maintenanceId = $connection->insert_id; // Retrieve the generated maintenance_id
+        echo "Maintenance record inserted successfully. Maintenance ID: $maintenanceId";
     } else {
         echo "Error inserting maintenance record: " . $connection->error;
     }
 
     // Insert data into the Warranties table
-    $warrantyQuery = "INSERT INTO Warranties (start_date, end_date, provider, terms, extended_warranty_start, extended_warranty_end, cost)
-                      VALUES ('$warrantyStartDate', '$warrantyEndDate', '$warrantyProvider', '$warrantyTerms', '$extendedWarrantyStartDate', '$extendedWarrantyEndDate', '$warrantyCost')";
+    $warrantyQuery = "INSERT INTO Warranties (warranty_id, start_date, end_date, provider, terms, extended_warranty_start, extended_warranty_end, cost)
+                    VALUES (NULL, '$warrantyStartDate', '$warrantyEndDate', '$warrantyProvider', '$warrantyTerms', '$extendedWarrantyStartDate', '$extendedWarrantyEndDate', '$warrantyCost')";
 
     if ($connection->query($warrantyQuery) === TRUE) {
-        echo "Warranty record inserted successfully";
+        $warrantyId = $connection->insert_id; // Retrieve the generated warranty_id
+        echo "Warranty record inserted successfully. Warranty ID: $warrantyId";
     } else {
         echo "Error inserting warranty record: " . $connection->error;
     }
@@ -72,4 +75,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Close the database connection
     $connection->close();
 }
-?>
