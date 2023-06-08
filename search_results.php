@@ -21,13 +21,21 @@ if ($connection->connect_error) {
 }
 
 // Retrieve data from the Items, Maintenance, and Warranties tables
-$itemQuery = "SELECT * FROM Items";
-$maintenanceQuery = "SELECT * FROM Maintenance";
-$warrantyQuery = "SELECT * FROM Warranties";
+$queryItem = $_POST['searchQuery'];
 
-$itemResult = $connection->query($itemQuery);
-$maintenanceResult = $connection->query($maintenanceQuery);
-$warrantyResult = $connection->query($warrantyQuery);
+$itemResult = '';
+$itemResult = $itemResult . 'SELECT * FROM `items` WHERE ';
+$itemResult = $itemResult . 'item_id in ';
+$itemResult = $itemResult . '(select warranty_id from Warranties where provider like \'%'.$queryItem.'%\' or terms like \'%'.$queryItem.'%\') OR ';
+$itemResult = $itemResult . 'item_id in ';
+$itemResult = $itemResult . '(select maintenance_id from Maintenance where description like \'%'.$queryItem.'%\' or cost like \'%'.$queryItem.'%\') OR ';
+$itemResult = $itemResult . 'name like \'%'.$queryItem.'%\' OR ';
+$itemResult = $itemResult . 'description like \'%'.$queryItem.'%\';';
+
+
+$itemResult = $connection->query($itemResult);
+//$maintenanceResult = $connection->query($maintenanceQuery);
+//$warrantyResult = $connection->query($warrantyQuery);
 
 // Display the data in a table
 echo "<table>
@@ -52,7 +60,10 @@ echo "<table>
         </tr>";
 
 // Iterate over the data and display each row
+$numOfResults = 0;
+
 while ($row = $itemResult->fetch_assoc()) {
+    $numOfResults++;
     echo "<tr>";
     echo "<td>" . $row["item_id"] . "</td>";
     echo "<td>" . $row["name"] . "</td>";
@@ -61,9 +72,10 @@ while ($row = $itemResult->fetch_assoc()) {
     echo "<td>" . $row["manufacturer"] . "</td>";
 
     // Find the corresponding maintenance record for the item
-    $maintenanceId = $row["item_id"];
+    $maintenanceResult = $connection->query('select * from maintenance where maintenance_id = '.$row["item_id"].';');
     $maintenanceRecord = $maintenanceResult->fetch_assoc();
-    if ($maintenanceRecord && $maintenanceRecord["maintenance_id"] == $maintenanceId) {
+
+    if ($maintenanceRecord && $maintenanceRecord["maintenance_id"] == $row["item_id"]) {
         echo "<td>" . $maintenanceRecord["maintenance_id"] . "</td>";
         echo "<td>" . $maintenanceRecord["date"] . "</td>";
         echo "<td>" . $maintenanceRecord["description"] . "</td>";
@@ -73,9 +85,9 @@ while ($row = $itemResult->fetch_assoc()) {
     }
 
     // Find the corresponding warranty record for the item
-    $warrantyId = $row["item_id"];
+    $warrantyResult = $connection->query('select * from warranties where warranty_id = '.$row["item_id"].';');
     $warrantyRecord = $warrantyResult->fetch_assoc();
-    if ($warrantyRecord && $warrantyRecord["warranty_id"] == $warrantyId) {
+    if ($warrantyRecord && $warrantyRecord["warranty_id"] == $row["item_id"]) {
         echo "<td>" . $warrantyRecord["warranty_id"] . "</td>";
         echo "<td>" . $warrantyRecord["start_date"] . "</td>";
         echo "<td>" . $warrantyRecord["end_date"] . "</td>";
@@ -89,6 +101,12 @@ while ($row = $itemResult->fetch_assoc()) {
     }
 
     echo "</tr>";
+}
+
+if($numOfResults == 0) {
+    echo "<tr><td colspan='17'>No results found</td></tr>";
+}else{
+    echo "<tr><td colspan='17'>Number of results: ".$numOfResults."</td></tr>";
 }
 
 echo "</table>";
